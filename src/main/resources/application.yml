@@ -1,0 +1,19 @@
+server:
+  port:9003
+
+spring:
+  application:
+    name: ms-config-client
+  cloud:
+    config:
+      profile: master
+      uri: http://localhost:9002
+
+eureka:
+  client:
+    serverUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+    appname: ${spring.application.name}
