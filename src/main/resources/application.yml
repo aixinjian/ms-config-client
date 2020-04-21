@@ -6,7 +6,7 @@ spring:
     name: ms-config-client
   cloud:
     config:
-      profile: master
+      profile: dev
       uri: http://localhost:9002
 
 eureka:
