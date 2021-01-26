@@ -1,8 +1,5 @@
 package com.ms.ms.config.client.vo;
 
-import com.netflix.appinfo.MyDataCenterInfo;
-
-import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.*;
@@ -17,10 +14,11 @@ import static java.lang.Thread.*;
  */
 public class VolatileDemo {
 
-    static int number = 0;
+    volatile static int number = 0;
 
     public static void main(String[] args) throws InterruptedException {
-        volatileVisiTest();
+        //volatileVisiTest();
+        atomicTest();
     }
 
     /**
@@ -47,6 +45,34 @@ public class VolatileDemo {
 
         System.out.println(Thread.currentThread().getName() + "\t main获取 number值: " + number);
 
+    }
+
+    /**
+     * volatile 原子性测试
+     */
+    public static void atomicTest() {
+        System.out.println(Thread.currentThread().getName() + " start****");
+        for (int i = 1; i <= 20; i++) {
+            new Thread(() -> {
+                for (int j = 0; j < 10000; j++) {
+                    //number++;
+                    numberIncrease();
+                    System.out.println(Thread.currentThread().getName()+" updated number value: " + number);
+
+                }
+            }, "Thread" + String.valueOf(i)).start();
+        }
+
+        while (Thread.activeCount() > 2) {
+            Thread.yield();
+        }
+        System.out.println(Thread.currentThread().getName()+"\t number值: "+number);
 
     }
+
+    synchronized static void numberIncrease() {
+        number ++;
+    }
+
+
 }
