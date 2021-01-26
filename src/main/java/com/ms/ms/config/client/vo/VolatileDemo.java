@@ -70,7 +70,7 @@ public class VolatileDemo {
 
     }
 
-    synchronized static void numberIncrease() {
+    static void numberIncrease() {
         number ++;
     }
 
