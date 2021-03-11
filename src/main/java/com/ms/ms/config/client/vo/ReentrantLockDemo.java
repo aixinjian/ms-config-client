@@ -17,15 +17,15 @@ public class ReentrantLockDemo {
     public static void reentrantLockTest() {
         ReentrantLock lock = new ReentrantLock();
         int i = 0;
-        for(;i<10;i++){
+        for(;i<5;i++){
             new Thread(()->{
-                lock.lock();
+                //lock.lock();
                 try{
-                    for (int j = 0; j < 10; j++) {
+                    for (int j = 0; j < 5; j++) {
                         System.out.println("线程执行结果：" + j);
                     }
                 }finally {
-                    lock.unlock();
+                    //lock.unlock();
                 }
             },"ReentrantThread" +i ).start();
         }
